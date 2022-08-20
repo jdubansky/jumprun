@@ -12,7 +12,7 @@ function App() {
   let [speed, setSpeed] = React.useState(0.0);
 
   function fetchDataFromApi(){
-    axios.get(`127.0.0.1:5000/`)
+    axios.get(`http://127.0.0.1:5000/`)
       .then(res => {
         console.log(res.data);
         setLat(res.data['lat']);
