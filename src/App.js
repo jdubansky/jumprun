@@ -12,18 +12,18 @@ function App() {
   let [speed, setSpeed] = React.useState(0.0);
 
   function fetchDataFromApi(){
-    axios.get(`https://630110489a1035c7f8fd5aaf.mockapi.io/data`)
+    axios.get(`localhost:5000`)
       .then(res => {
         console.log(res.data);
-        setLat(res.data[0]['lat']);
-        setTrack(res.data[0]['track']);
-        setSpeed(res.data[0]['speed']);
+        setLat(res.data['lat']);
+        setTrack(res.data['track']);
+        setSpeed(res.data['speed']);
       })
   }
 
   React.useEffect(() => {
     fetchDataFromApi();
-    setInterval(fetchDataFromApi(), 30000);
+    setInterval(fetchDataFromApi(), 1000);
   }, []);
 
   return (
