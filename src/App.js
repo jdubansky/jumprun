@@ -10,6 +10,7 @@ function App() {
   let [lon, setLon] = React.useState(0.0);
   let [track, setTrack] = React.useState(0.0);
   let [speed, setSpeed] = React.useState(0.0);
+  let [alt, setAlt] = React.useState(0.0);
 
   function fetchDataFromApi(){
     axios.get(`http://127.0.0.1:5000/`)
@@ -17,13 +18,16 @@ function App() {
         console.log(res.data);
         setLat(res.data['lat']);
         setTrack(res.data['track']);
-        setSpeed(res.data['speed']);
+        setAlt(res.data['alt']);
+        setSpeed(res.data['speed'] * 2.2369); // multiple by 2.2369 since m/s
       })
   }
 
   React.useEffect(() => {
     fetchDataFromApi();
-    setInterval(fetchDataFromApi(), 1000);
+    setInterval(() => {
+      fetchDataFromApi()
+    }, 1000);
   }, []);
 
   return (
