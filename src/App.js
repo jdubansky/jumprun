@@ -27,6 +27,7 @@ function App() {
         if(res.data['track'] != 0.0){
           let info = (Math.round(res.data['track'] * 100) / 100).toFixed(2);
           setTrack(info);
+          figureSeperation();
         }
 
         if(res.data['alt'] != 0.0){
@@ -35,8 +36,9 @@ function App() {
         }
 
         if(res.data['speed'] != 0.0){
-          let info = (Math.round(res.data['speed'] * 100) / 100).toFixed(2);
-          setSpeed(info * 2.2369); // multiple by 2.2369 since m/s
+          let info = (Math.round(res.data['speed'] * 2.2369 * 100) / 100).toFixed(2);
+          setSpeed(info); // multiple by 2.2369 since m/s
+          figureDirection();
         }
 
       })
@@ -52,13 +54,13 @@ function App() {
   }
 
   function figureDirection(){
-    if(track > .6){
+    if(speed > 2){
       setSeperation("2 Seconds");
     }
-    else if(track > .4){
+    else if(speed > 1.1){
       setSeperation("4 Seconds");
     }
-    else if(track > .2){
+    else if(speed > 0.5){
       setSeperation("6 Seconds");
     }
     else{
