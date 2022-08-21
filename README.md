@@ -6,6 +6,26 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+
+## Notes
+# Make sure sudo has all pip packages
+sudo nano /etc/rc.local
+#add 
+python3 /home/pi/gpsAPI.py &
+
+
+## full screen website
+cd .config
+sudo mkdir -p lxsession/LXDE-pi
+sudo nano lxsession/LXDE-pi/autostart
+
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+#@xscreensaver -no-splash
+point-rpi
+@chromium-browser --start-fullscreen --start-maximized file:///home/pi/Downloads/jumprun/build/index.html
+
+
 ### `npm start`
 
 Runs the app in the development mode.\

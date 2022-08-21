@@ -11,16 +11,59 @@ function App() {
   let [track, setTrack] = React.useState(0.0);
   let [speed, setSpeed] = React.useState(0.0);
   let [alt, setAlt] = React.useState(0.0);
+  let [seperation, setSeperation] = React.useState("15 Seconds");
+  let [direction, setDirection] = React.useState("North");
+  
 
   function fetchDataFromApi(){
     axios.get(`http://127.0.0.1:5000/`)
       .then(res => {
         console.log(res.data);
-        setLat(res.data['lat']);
-        setTrack(res.data['track']);
-        setAlt(res.data['alt']);
-        setSpeed(res.data['speed'] * 2.2369); // multiple by 2.2369 since m/s
+        if(res.data['lat'] != 0.0){
+          let info = (Math.round(res.data['lat'] * 100) / 100).toFixed(2);
+          setLat(info);
+        }
+
+        if(res.data['track'] != 0.0){
+          let info = (Math.round(res.data['track'] * 100) / 100).toFixed(2);
+          setTrack(info);
+        }
+
+        if(res.data['alt'] != 0.0){
+          let info = (Math.round(res.data['alt'] * 100) / 100).toFixed(2);
+          setAlt(info);
+        }
+
+        if(res.data['speed'] != 0.0){
+          let info = (Math.round(res.data['speed'] * 100) / 100).toFixed(2);
+          setSpeed(info * 2.2369); // multiple by 2.2369 since m/s
+        }
+
       })
+  }
+
+  function figureSeperation(){
+    if(track < 90){
+      setDirection("North");
+    }
+    else{
+      setDirection("South");
+    }
+  }
+
+  function figureDirection(){
+    if(track > .6){
+      setSeperation("2 Seconds");
+    }
+    else if(track > .4){
+      setSeperation("4 Seconds");
+    }
+    else if(track > .2){
+      setSeperation("6 Seconds");
+    }
+    else{
+      setSeperation("15 Seconds");
+    }
   }
 
   React.useEffect(() => {
@@ -39,7 +82,8 @@ function App() {
       <h2> {track} </h2>
     </div>
     <div className="col-lg-6 mt-3">
-      <h2>NORTHWEST</h2>
+      <h2>Direction</h2>
+      <h2>{direction}</h2>
     </div>
     <div className="col-lg-6 mt-3">
       <h2>Airspeed</h2>
@@ -47,7 +91,11 @@ function App() {
     </div>
     <div className="col-lg-6 mt-3">
       <h2>Seperation</h2>
-      <h2>99 Seconds</h2>
+      <h2>{seperation}</h2>
+    </div>
+    <div className="col-lg-6 mt-3">
+      <h2>Altitude</h2>
+      <h2>{alt}</h2>
     </div>
   </div>
   </div>
